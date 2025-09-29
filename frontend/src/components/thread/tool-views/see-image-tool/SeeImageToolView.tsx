@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import Image from 'next/image';
 import { Image as ImageIcon, ImageOff, CheckCircle, AlertTriangle, Loader2, Download, ZoomIn, ZoomOut, Trash2 } from 'lucide-react';
 import { ToolViewProps } from '../types';
 import {
@@ -27,8 +28,9 @@ function SafeImage({ src, alt, filePath, className }: { src: string; alt: string
   const { session } = useAuth();
 
   useEffect(() => {
+    let isMounted = true;
     const setupAuthenticatedImage = async () => {
-      if (src.includes('/sandboxes/') && src.includes('/files/content')) {
+      if (imgSrc !== src && src.includes('/sandboxes/') && src.includes('/files/content')) {
         try {
           const response = await fetch(src, {
             headers: {
@@ -57,11 +59,12 @@ function SafeImage({ src, alt, filePath, className }: { src: string; alt: string
     setAttempts(0);
 
     return () => {
+      isMounted = false;
       if (imgSrc && imgSrc.startsWith('blob:')) {
         URL.revokeObjectURL(imgSrc);
       }
     };
-  }, [src, session?.access_token]);
+  }, [src, session?.access_token, imgSrc]);
 
   const handleError = () => {
     if (attempts < 3) {
@@ -148,7 +151,7 @@ function SafeImage({ src, alt, filePath, className }: { src: string; alt: string
         isZoomed ? "cursor-zoom-out" : "cursor-zoom-in"
       )}>
         <div className="relative flex items-center justify-center">
-          <img
+          <Image
             src={imgSrc}
             alt={alt}
             onClick={handleZoomToggle}
@@ -163,6 +166,10 @@ function SafeImage({ src, alt, filePath, className }: { src: string; alt: string
               transform: isZoomed ? `scale(${zoomLevel})` : 'none',
             }}
             onError={handleError}
+            width={800}
+            height={600}
+            priority
+            unoptimized={imgSrc.startsWith('blob:') || imgSrc.startsWith('data:')}
           />
         </div>
       </div>

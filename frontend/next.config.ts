@@ -2,6 +2,19 @@ import type { NextConfig } from 'next';
 
 const nextConfig = (): NextConfig => ({
   output: (process.env.NEXT_OUTPUT as 'standalone') || undefined,
+  images: {
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: '**',
+      },
+      {
+        protocol: 'http',
+        hostname: 'localhost',
+      }
+    ],
+    unoptimized: process.env.NODE_ENV === 'development',
+  },
   
   async rewrites() {
     return [

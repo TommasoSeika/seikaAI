@@ -18,6 +18,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { ScrollArea } from "@/components/ui/scroll-area";
+import NextImage from 'next/image';
 import { LoadingState } from '../shared/LoadingState';
 import { extractWebSearchData } from './_utils';
 
@@ -139,9 +140,11 @@ export function WebSearchToolView({
                           rel="noopener noreferrer"
                           className="group relative overflow-hidden rounded-lg border border-zinc-200 dark:border-zinc-800 bg-zinc-100 dark:bg-zinc-900 hover:border-blue-300 dark:hover:border-blue-700 transition-colors shadow-sm hover:shadow-md"
                         >
-                          <img
+                          <NextImage
                             src={imageUrl}
                             alt={`Search result ${idx + 1}`}
+                            width={400}
+                            height={300}
                             className="object-cover w-full h-32 group-hover:opacity-90 transition-opacity"
                             onError={(e) => {
                               const target = e.target as HTMLImageElement;
@@ -191,9 +194,11 @@ export function WebSearchToolView({
                       <div className="p-4">
                         <div className="flex items-start gap-3 mb-2">
                           {favicon && (
-                            <img
+                            <NextImage
                               src={favicon}
                               alt=""
+                              width={20}
+                              height={20}
                               className="w-5 h-5 mt-1 rounded"
                               onError={(e) => {
                                 (e.target as HTMLImageElement).style.display = 'none';

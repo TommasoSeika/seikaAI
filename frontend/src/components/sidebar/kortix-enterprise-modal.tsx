@@ -25,7 +25,7 @@ export function KortixEnterpriseModal({
   const [internalOpen, setInternalOpen] = useState(false);
   const isDesktop = useMediaQuery('(min-width: 768px)');
   const { resolvedTheme } = useTheme();
-  const isDarkMode = resolvedTheme === 'dark';
+  const isDarkMode = resolvedTheme ? resolvedTheme === 'dark' : false;
 
   // Use controlled or internal state
   const open = controlledOpen !== undefined ? controlledOpen : internalOpen;
