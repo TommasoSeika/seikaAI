@@ -30,6 +30,7 @@ services:
       - REDIS_PORT=6379
       - REDIS_PASSWORD=
       - REDIS_SSL=False
+      - ENCRYPTION_KEY="w7xD1w2YIh3KdQGxj9m9aRdfw8hJz1c2bQyUeVZzP3M="
     depends_on:
       redis:
         condition: service_healthy
@@ -64,7 +65,7 @@ services:
     ports:
       - "3000:3000"
     volumes:
-      - ./frontend/.env:/app/.env:ro
+      - ./frontend/.env.production:/app/.env:ro
     depends_on:
       - backend
 

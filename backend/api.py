@@ -127,7 +127,7 @@ async def log_requests_middleware(request: Request, call_next):
         raise
 
 # Define allowed origins based on environment
-allowed_origins = ["https://www.suna.so", "https://suna.so"]
+allowed_origins = ["https://www.suna.so", "https://suna.so", "http://13.88.190.117:3000"]
 allow_origin_regex = None
 
 # Add staging-specific origins
@@ -137,7 +137,7 @@ if config.ENV_MODE == EnvMode.LOCAL:
 # Add staging-specific origins
 if config.ENV_MODE == EnvMode.STAGING:
     allowed_origins.append("https://staging.suna.so")
-    allowed_origins.append("http://localhost:3000")
+    allowed_origins.append("http://13.88.190.117:3000")
     allow_origin_regex = r"https://suna-.*-prjcts\.vercel\.app"
 
 app.add_middleware(
